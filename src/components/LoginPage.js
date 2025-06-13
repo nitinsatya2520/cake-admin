@@ -2,6 +2,7 @@ import { useState } from "react";
 import API from "../services/api";
 import { setToken } from "../utils/auth";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png"; // Or use `/logo.png` if in public
 
 export default function LoginPage() {
   const [password, setPassword] = useState("");
@@ -24,6 +25,7 @@ export default function LoginPage() {
 
   return (
     <div style={styles.container}>
+        <img src={logo} alt="Bakery Logo" style={styles.logo} />
       <h2 style={styles.heading}>🧁 Admin Login</h2>
       <form onSubmit={login} style={styles.form}>
         <input
@@ -58,6 +60,11 @@ const styles = {
     fontSize: "26px",
     marginBottom: "25px",
     color: "#5D4037",
+  },
+   logo: {
+    height: "100px",
+    width: "100px",
+    borderRadius: "25%",
   },
   form: {
     display: "flex",
