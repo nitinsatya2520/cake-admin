@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import LoginPage from "./components/LoginPage";
+import Dashboard from "./components/Dashboard";
+import ProductManager from "./components/ProductManager";
+import OrderList from "./components/OrderList";
+import { getToken } from "./utils/auth";
+import "./App.css";
+function PrivateRoute({ children }) {
+  return getToken() ? children : <Navigate to="/" />;
 }
 
-export default App;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path="/products" element={<PrivateRoute><ProductManager /></PrivateRoute>} />
+        <Route path="/orders" element={<PrivateRoute><OrderList /></PrivateRoute>} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
